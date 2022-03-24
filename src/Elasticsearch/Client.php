@@ -5,8 +5,8 @@
  * @link      https://github.com/elastic/elasticsearch-php/
  * @copyright Copyright (c) Elasticsearch B.V (https://www.elastic.co)
  * @license   http://www.apache.org/licenses/LICENSE-2.0 Apache License, Version 2.0
- * @license   https://www.gnu.org/licenses/lgpl-2.1.html GNU Lesser General Public License, Version 2.1
- *
+ * @license   https://www.gnu.org/licenses/lgpl-2.1.html GNU Lesser General Public License, Version 2.1 
+ * 
  * Licensed to Elasticsearch B.V under one or more agreements.
  * Elasticsearch B.V licenses this file to you under the Apache 2.0 License or
  * the GNU Lesser General Public License, Version 2.1, at your option.
@@ -95,172 +95,172 @@ class Client
      * @var AsyncSearchNamespace
      */
     protected $asyncSearch;
-
+    
     /**
      * @var AutoscalingNamespace
      */
     protected $autoscaling;
-
+    
     /**
      * @var CatNamespace
      */
     protected $cat;
-
+    
     /**
      * @var CcrNamespace
      */
     protected $ccr;
-
+    
     /**
      * @var ClusterNamespace
      */
     protected $cluster;
-
+    
     /**
      * @var DanglingIndicesNamespace
      */
     protected $danglingIndices;
-
+    
     /**
      * @var DataFrameTransformDeprecatedNamespace
      */
     protected $dataFrameTransformDeprecated;
-
+    
     /**
      * @var EnrichNamespace
      */
     protected $enrich;
-
+    
     /**
      * @var EqlNamespace
      */
     protected $eql;
-
+    
     /**
      * @var FeaturesNamespace
      */
     protected $features;
-
+    
     /**
      * @var FleetNamespace
      */
     protected $fleet;
-
+    
     /**
      * @var GraphNamespace
      */
     protected $graph;
-
+    
     /**
      * @var IlmNamespace
      */
     protected $ilm;
-
+    
     /**
      * @var IndicesNamespace
      */
     protected $indices;
-
+    
     /**
      * @var IngestNamespace
      */
     protected $ingest;
-
+    
     /**
      * @var LicenseNamespace
      */
     protected $license;
-
+    
     /**
      * @var LogstashNamespace
      */
     protected $logstash;
-
+    
     /**
      * @var MigrationNamespace
      */
     protected $migration;
-
+    
     /**
      * @var MlNamespace
      */
     protected $ml;
-
+    
     /**
      * @var MonitoringNamespace
      */
     protected $monitoring;
-
+    
     /**
      * @var NodesNamespace
      */
     protected $nodes;
-
+    
     /**
      * @var RollupNamespace
      */
     protected $rollup;
-
+    
     /**
      * @var SearchableSnapshotsNamespace
      */
     protected $searchableSnapshots;
-
+    
     /**
      * @var SecurityNamespace
      */
     protected $security;
-
+    
     /**
      * @var ShutdownNamespace
      */
     protected $shutdown;
-
+    
     /**
      * @var SlmNamespace
      */
     protected $slm;
-
+    
     /**
      * @var SnapshotNamespace
      */
     protected $snapshot;
-
+    
     /**
      * @var SqlNamespace
      */
     protected $sql;
-
+    
     /**
      * @var SslNamespace
      */
     protected $ssl;
-
+    
     /**
      * @var TasksNamespace
      */
     protected $tasks;
-
+    
     /**
      * @var TextStructureNamespace
      */
     protected $textStructure;
-
+    
     /**
      * @var TransformNamespace
      */
     protected $transform;
-
+    
     /**
      * @var WatcherNamespace
      */
     protected $watcher;
-
+    
     /**
      * @var XpackNamespace
      */
     protected $xpack;
-
+    
 
     /**
      * Client constructor
@@ -908,8 +908,6 @@ class Client
         $endpoint->setType($type);
         $endpoint->setBody($body);
 
-
-
         return $this->performRequest($endpoint);
     }
     /**
@@ -981,20 +979,29 @@ class Client
      * @return array
      * @see https://www.elastic.co/guide/en/elasticsearch/reference/master/search-multi-search.html
      */
-    public function msearch(array $params = [])
+    public function msearch($params)
     {
-        $index = $this->extractArgument($params, 'index');
-        $type = $this->extractArgument($params, 'type');
-        $body = $this->extractArgument($params, 'body');
+        $promise =  $this->transport->performRequest(
+            "POST",
+            "/_sql?format=json",
+            [],
+            $params,
+            []
+        );
+        return $this->transport->resultOrFuture($promise);
 
-        $endpointBuilder = $this->endpoints;
-        $endpoint = $endpointBuilder('Msearch');
-        $endpoint->setParams($params);
-        $endpoint->setIndex($index);
-        $endpoint->setType($type);
-        $endpoint->setBody($body);
+//        $index = $this->extractArgument($params, 'index');
+//        $type = $this->extractArgument($params, 'type');
+//        $body = $this->extractArgument($params, 'body');
+//
+//        $endpointBuilder = $this->endpoints;
+//        $endpoint = $endpointBuilder('Msearch');
+//        $endpoint->setParams($params);
+//        $endpoint->setIndex($index);
+//        $endpoint->setType($type);
+//        $endpoint->setBody($body);
 
-        return $this->performRequest($endpoint);
+        //return $this->performRequest($endpoint);
     }
     /**
      * Allows to execute several search template operations in one request.
@@ -1923,7 +1930,6 @@ class Client
      */
     private function performRequest(AbstractEndpoint $endpoint)
     {
-
         $promise =  $this->transport->performRequest(
             $endpoint->getMethod(),
             $endpoint->getURI(),
@@ -1933,4 +1939,11 @@ class Client
         );
         return $this->transport->resultOrFuture($promise, $endpoint->getOptions());
     }
+
+
+
+
+
+
+
 }

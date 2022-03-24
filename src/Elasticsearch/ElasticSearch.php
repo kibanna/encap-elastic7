@@ -189,9 +189,9 @@ class ElasticSearch
 
     // 查询总数量
     public  function count($sql){
-
         if (!empty($sql)) {
             $res = [];
+           
             try {
                 $res = $this->api->msearch(["query" => $sql],$this->hosts);
             }catch (\Throwable $e){
@@ -270,14 +270,16 @@ class ElasticSearch
 
 
 
-
     // sql 查询
     public function sql($sql){
+    //echo 1;exit;
         if (!empty($sql)) {
             $res = [];
             try {
                 $res = $this->api->msearch(["query" => $sql],$this->hosts);
+                //var_dump($res);exit;
             }catch (\Throwable $e){
+            echo 2;exit;
                 return $e->getMessage();
             }
 
