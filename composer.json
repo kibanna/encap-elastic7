@@ -38,7 +38,7 @@
       "src/autoload.php"
     ],
     "psr-4": {
-      "Caoxu\\EncapElastic\\": "src/Elasticsearch/"
+      "Elasticsearch\\": "src/Elasticsearch/"
     }
   },
   "autoload-dev": {
