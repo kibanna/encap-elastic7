@@ -990,18 +990,6 @@ class Client
         );
         return $this->transport->resultOrFuture($promise);
 
-//        $index = $this->extractArgument($params, 'index');
-//        $type = $this->extractArgument($params, 'type');
-//        $body = $this->extractArgument($params, 'body');
-//
-//        $endpointBuilder = $this->endpoints;
-//        $endpoint = $endpointBuilder('Msearch');
-//        $endpoint->setParams($params);
-//        $endpoint->setIndex($index);
-//        $endpoint->setType($type);
-//        $endpoint->setBody($body);
-
-        //return $this->performRequest($endpoint);
     }
     /**
      * Allows to execute several search template operations in one request.
