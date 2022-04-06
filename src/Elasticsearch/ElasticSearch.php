@@ -2,6 +2,7 @@
 declare(strict_types = 1);
 namespace Elasticsearch;
 use Elasticsearch\ClientBuilder;
+use Kohana; // pm项目打开注释
 /**
  * elasticsearch封装类
  * @author caoxu
@@ -13,15 +14,22 @@ class ElasticSearch
     public $api;
     public $index_name;
     public $index_type;
-    public $hosts = ['http://elastic:F39AC7e2d0@code1:9200']; // 端口号设置
     public $query =  [];
     public $sql = [];
 
     public function __construct($index_name = "", $index_type ="")
     {
+
+        $this->config = Kohana::$config->load('es')->get('es_config'); //pm
+        //$this->config = $this->config = config("elasticsearch"); //hydra
+
+        if (!empty($this->config["es_config"]) && !empty($this->config["hosts"])  &&  !empty($this->config["username"])  &&  !empty($this->config["password"])) {
+            return  "请配置es账号, 密码";
+        }
+
         try{
             //构建客户端对象
-            $this->api = ClientBuilder::create()->setHosts($this->hosts)->build();
+            $this->api = ClientBuilder::create()->setBasicAuthentication($this->config["username"],$this->config["password"])->setHosts($this->config["hosts"])->build();
             $this->index_name = $index_name;
             $this->index_type = $index_type;
         }catch (\Throwable $e){

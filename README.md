@@ -98,6 +98,29 @@ $res   =  $query->searchMulti();
 $query = new ElasticSearch();
 $count= $query->count(" select coun(*) as count from hydra_access_count_logs where $where ");
 
+
+
+#添加
+$api = new ElasticSearch('hydra_access_count_logs', '_doc');
+$list = DB::table("hydra.access_count_logs")
+        ->whereBetween('create_time', ["2022-03-20", "2022-03-20 23:59:59"])
+        ->orderBy("id","desc")->get()->map(function ($value) {
+            return (array)$value;
+        })->toArray();
+ 
+foreach ($list as $v) {
+  $data = [];
+  $data["body"] = $v;
+  $data["body"]["platform"] = "阿里妈妈";
+  $data["body"]["platform_id"] = 1;
+  $data["body"]["nick"] = "赫恩-联世-焕颜霜".rand(0,100);
+  $data["body"]["create_stamp"] = strtotime($v["created_at"]);
+  $return = $api->add($data);
+  echo $return;
+}
+
+
+
 ```
 
 
