@@ -111,7 +111,7 @@ $list = DB::table("hydra.access_count_logs")
 foreach ($list as $v) {
   $data = [];
   $data["body"] = $v;
-  $data["body"]["platform"] = "阿里妈妈";
+  $data["body"]["platform"] = "ssssss";
   $data["body"]["platform_id"] = 1;
   $data["body"]["nick"] = "123344455".rand(0,100);
   $data["body"]["create_stamp"] = strtotime($v["created_at"]);
