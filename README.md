@@ -113,7 +113,7 @@ foreach ($list as $v) {
   $data["body"] = $v;
   $data["body"]["platform"] = "阿里妈妈";
   $data["body"]["platform_id"] = 1;
-  $data["body"]["nick"] = "赫恩-联世-焕颜霜".rand(0,100);
+  $data["body"]["nick"] = "123344455".rand(0,100);
   $data["body"]["create_stamp"] = strtotime($v["created_at"]);
   $return = $api->add($data);
   echo $return;
